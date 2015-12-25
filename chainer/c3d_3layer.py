@@ -65,7 +65,7 @@ if args.resume:
     serializers.load_hdf5(args.resume, optimizer)
 
 # Training params
-batchsize = 10
+batchsize = 50
 n_epoch = 20
 
 # Graph
