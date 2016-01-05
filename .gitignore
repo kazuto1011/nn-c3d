@@ -61,3 +61,4 @@ target/
 twitkey.py
 c3d_3layer.state
 c3d_3layer.model
+tensorboard/
