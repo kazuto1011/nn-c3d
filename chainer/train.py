@@ -21,8 +21,6 @@ parser.add_argument('--initmodel', '-m', default='',
                     help='Initialize the model from given file')
 parser.add_argument('--resume', '-r', default='',
                     help='Resume the optimization from snapshot')
-parser.add_argument('--net', '-n', choices=('simple', 'parallel'),
-                    default='simple', help='Network type')
 parser.add_argument('--gpu', '-g', default=-1, type=int,
                     help='GPU ID (negative value indicates CPU)')
 args = parser.parse_args()
@@ -41,19 +39,14 @@ y_train, y_test = np.split(c3d_data['target'], [N])
 N_test = y_test.size
 
 # 3-layer nets
-if args.net == 'simple':
-    model = L.Classifier(net.C3DNet())
-    if args.gpu >= 0:
-        cuda.get_device(args.gpu).use()
-        model.to_gpu()
-    xp = np if args.gpu < 0 else cuda.cupy
-elif args.net == 'parallel':
-    cuda.check_cuda_available()
-    model = L.Classifier(net.C3DNet())
-    xp = cuda.cupy
+model = L.Classifier(net.C3DNet())
+if args.gpu >= 0:
+    cuda.get_device(args.gpu).use()
+    model.to_gpu()
+xp = np if args.gpu < 0 else cuda.cupy
 
 # Setup model
-optimizer = optimizers.Adam()
+optimizer = optimizers.Adam(alpha=1e-4)
 optimizer.setup(model)
 
 # Init/Resume
