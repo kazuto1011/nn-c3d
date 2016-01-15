@@ -1,3 +1,5 @@
+__author__ = 'kazuto1011'
+
 import sys, cv2, six, time
 import numpy as np
 import tensorflow as tf
@@ -87,11 +89,11 @@ with tf.Graph().as_default():
             x_batch = x_train[perm[step:step + batchsize]]
             y_batch = y_train[perm[step:step + batchsize]]
             sess.run(train_op, feed_dict={x:x_batch, y:y_batch, keep_prob:0.5, loss_name:"train_loss", accur_name:"train_accuracy"})
-            if step % 1000 == 0:
-                train_accur = sess.run(accur, feed_dict={x: x_batch, y: y_batch, keep_prob: 1.0, loss_name:"train_loss", accur_name:"train_accuracy"})
-                print "step %d, training accuracy %g" % (step,train_accur)
-                summary_str = sess.run(summary_op, feed_dict={x: x_batch, y: y_batch, keep_prob: 1.0, loss_name:"train_loss", accur_name:"train_accuracy"})
-                summary_writer.add_summary(summary_str, epoch*N_TRAIN + step)
+
+        train_accur = sess.run(accur, feed_dict={x: x_train, y: y_train, keep_prob: 1.0, loss_name:"train_loss", accur_name:"train_accuracy"})
+        print "step %d, training accuracy %g" % (step,train_accur)
+        summary_str = sess.run(summary_op, feed_dict={x: x_train, y: y_train, keep_prob: 1.0, loss_name:"train_loss", accur_name:"train_accuracy"})
+        summary_writer.add_summary(summary_str, epoch*N_TRAIN + step)
 
         print "test accuracy %g"%sess.run(accur, feed_dict={x:x_test, y:y_test, keep_prob:1.0, loss_name:"test_loss", accur_name:"test_accuracy"})
         summary_str = sess.run(summary_op, feed_dict={x: x_test, y: y_test, keep_prob: 1.0, loss_name:"test_loss", accur_name:"test_accuracy"})

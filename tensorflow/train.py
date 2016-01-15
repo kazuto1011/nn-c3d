@@ -1,3 +1,5 @@
+__author__ = 'kazuto1011'
+
 import sys, cv2, six, time
 import numpy as np
 import tensorflow as tf

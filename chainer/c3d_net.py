@@ -1,3 +1,5 @@
+__author__ = 'kazuto1011'
+
 import chainer
 import chainer.functions as F
 import chainer.links as L

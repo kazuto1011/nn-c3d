@@ -1,5 +1,7 @@
 # coding: utf-8
 
+__author__ = 'kazuto1011'
+
 import argparse
 import numpy as np
 import six, time
