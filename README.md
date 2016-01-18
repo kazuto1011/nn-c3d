@@ -1,1 +1,1 @@
-# c3d_3layer
+# nn-c3d
